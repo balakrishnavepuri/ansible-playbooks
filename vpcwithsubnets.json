@@ -1,0 +1,91 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "VPC network",
+    "Parameters": {
+        "myvpccidr": {
+            "Description": "cidr block",
+            "Type": "String",
+            "Default": "192.168.0.0/16"
+        },
+        "sub1cidr": {
+            "Description": "subnet 1 cidr",
+            "Type": "String",
+            "Default": "192.168.0.0/24"
+        },
+        "sub2cidr": {
+            "Description": "subnet 2 cidr",
+            "Type": "String",
+            "Default": "192.168.1.0/24"
+        },
+        "sub1az": {
+            "Description": "subnet 1 az",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "sub2az": {
+            "Description": "subnet 2 az",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        }
+    },
+    "Resources": {
+        "myvpc": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": {
+                    "Ref": "myvpccidr"
+                }
+            }
+        },
+        "sub1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Ref": "sub1az"
+                },
+                "VpcId": {
+                    "Ref": "myvpc"
+                },
+                "CidrBlock": {
+                    "Ref": "sub1cidr"
+                }
+            }
+        },
+        "sub2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": {
+                    "Ref": "sub2az"
+                },
+                "VpcId": {
+                    "Ref": "myvpc"
+                },
+                "CidrBlock": {
+                    "Ref": "sub2cidr"
+                }
+            }
+        },
+        "mysecuritygroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "to allow ssh and http",
+                "GroupName": "Allow SSH and HTTP",
+                "VpcId": {
+                    "Ref": "myvpc"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        }
+    }
+}
