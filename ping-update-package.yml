@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: execute ansible ping on host
+    ping:
+
+  - name: update packages on ubuntu
+    apt:
+      update-cache: yes

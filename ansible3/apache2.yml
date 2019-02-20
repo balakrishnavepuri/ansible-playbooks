@@ -1,0 +1,80 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: updating packages
+    apt:
+      update_cache: yes
+  - name: installing apache2server
+    apt:
+       name: apache2
+       state: present
+  - name: installing php packages
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - php
+      - libapache2-mod-php
+      - php-mcrypt
+      - php-mysql
+  - name: copying phpfile
+    get_url:
+      url: https://s3.amazonaws.com/harigameoflifewarfile/openmrs.war
+      dest: /var/www/html/info.php
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: updating packages
+    apt:
+      update_cache: yes
+  - name: installing apache2server
+    apt:
+       name: apache2
+       state: present
+  - name: installing php packages
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - php
+      - libapache2-mod-php
+      - php-mcrypt
+      - php-mysql
+  - name: copying phpfile
+    get_url:
+      url: https://s3.amazonaws.com/madhu-1/info+(4).php
+      dest: /var/www/html/info.php
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - geerlingguy.java
+    - idealista.tomcat-role
+  tasks:
+    - name: copy gol.war to tomcat app server
+      get_url:
+        url: https://s3.amazonaws.com/gameoflife-project/gameoflife.war
+        dest: /opt/tomcat/webapps/gameoflife.war
+      notify:
+        - restart tomcat
+  handlers:
+    - name: restart tomcat
+      service:
+        name: tomcat
+        state: restarted
+        enabled: yes
+
+
+
+
+---
+- hosts: all
+  become: yes
+  roles:
+    - geerlingguy.java
+    - idealista.tomcat-role
+  tasks:
+    - name: copy gol.war to tomcat app server
+      get_url:
+        url: https://s3.amazonaws.com/harigameoflifewarfile/openmrs.war
+        dest: /opt/tomcat/webapps/openmrs.war
+      notify:
+        - restart tomcat
+  handlers:
+    - name: restart tomcat
+      service:
+        name: tomcat
+        state: restarted
+        enabled: yes
+
+
+
+
+
+
+
+
+

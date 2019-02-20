@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: execute ansible ping on hosts
+      ping:
+    - name: update packages on ubuntu
+      apt:
+        update_cache: yes
+    - name: install git on ubuntu
+      apt:
+        name: git
+        state: present
+    - name: install tree on ubuntu
+      apt:
+        name: tree
+        state: present 
